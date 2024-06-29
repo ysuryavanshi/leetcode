@@ -9,10 +9,3 @@ class Solution:
             else:
                 ans.append(i)
         return ''.join(ans)
-
-
-with open("user.out", "w") as f:
-    inputs = map(loads, stdin)
-    for s in inputs:
-            print('"%s"'%(Solution().removeStars(s)),file=f)
-exit(0)

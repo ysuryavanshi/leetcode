@@ -1,49 +1,46 @@
-class DSU:
+class UF:
     def __init__(self, n):
-        self.parent = [i for i in range(n)]
-        self.rank = [0] * n
+        self.n = n
+        self.parent = [i for i in range(n + 1)]
+        self.rank = [1] * (n + 1)
     
-    def find(self, x):
-        if self.parent[x] != x:
-            self.parent[x] = self.find(self.parent[x])
-        return self.parent[x]
+    def find(self, node):
+        while node != self.parent[node]:
+            self.parent[node] = self.parent[self.parent[node]]
+            node = self.parent[node]
+        return node
     
-    def union(self, x, y):
-        xset, yset = self.find(x), self.find(y)
-        if xset != yset:
-            if self.rank[xset] < self.rank[yset]:
-                self.parent[xset] = yset
-            elif self.rank[xset] > self.rank[yset]:
-                self.parent[yset] = xset
-            else:
-                self.parent[xset] = yset
-                self.rank[yset] += 1
-            return True
-        return False
+    def union(self, n1, n2):
+        p1, p2 = self.find(n1), self.find(n2)
+        if p1 == p2:
+            return 0
+        if self.rank[p1] > self.rank[p2]:
+            self.rank[p1] += self.rank[p2]
+            self.parent[p2] = p1
+        else:
+            self.rank[p2] += self.rank[p1]
+            self.parent[p1] = p2
+        self.n -= 1
+        return 1
+
+    def is_connected(self):
+        return self.n <= 1
+
 
 class Solution:
-    def maxNumEdgesToRemove(self, n: int, edges: List[List[int]]) -> int:
-        edges.sort(reverse=True)
-        dsu_alice = DSU(n+1)
-        dsu_bob = DSU(n+1)
-        removed_edge = 0
-        alice_edges, bob_edges = 0, 0
-        for edge in edges:
-            if edge[0] == 3:
-                if dsu_alice.union(edge[1], edge[2]):
-                    dsu_bob.union(edge[1], edge[2])
-                    alice_edges += 1
-                    bob_edges += 1
-                else:
-                    removed_edge += 1
-            elif edge[0] == 2:
-                if dsu_bob.union(edge[1], edge[2]):
-                    bob_edges += 1
-                else:
-                    removed_edge += 1
-            else:
-                if dsu_alice.union(edge[1], edge[2]):
-                    alice_edges += 1
-                else:
-                    removed_edge += 1
-        return removed_edge if bob_edges == n - 1 == alice_edges else -1
+    def maxNumEdgesToRemove(self, n: int, edges: list[list[int]]) -> int:
+        alice, bob = UF(n), UF(n)
+        count = 0
+
+        for t, src, dest in edges:
+            if t == 3:
+                count += (alice.union(src, dest) | bob.union(src, dest))
+        for t, src, dest in edges:
+            if t == 1:
+                count += alice.union(src, dest)
+            elif t == 2:
+                count += bob.union(src, dest)
+
+        if bob.is_connected() and alice.is_connected():
+            return len(edges) - count
+        return -1

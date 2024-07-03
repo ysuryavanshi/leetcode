@@ -1,17 +1,13 @@
-import numpy as np
-
 class Solution:
     def maxScore(self, cardPoints: list[int], k: int) -> int:
-        prefixsum = deque(np.cumsum(cardPoints))
-        suffixsum = deque(np.cumsum(cardPoints[::-1]))
-        ans = ps = ss = 0
-        while k > 0:
-            if  prefixsum[k-1] - ps > suffixsum[k-1] - ss:
-                card = prefixsum.popleft() - ps
-                ps += card
-            else:
-                card = suffixsum.popleft() - ss
-                ss += card
-            ans += card
-            k -= 1
-        return ans
+        size = len(cardPoints)
+        left, right = k-1, size-1
+
+        current_pick = sum(cardPoints[:k])
+        max_points = current_pick
+
+        for _ in range(k):
+            current_pick += cardPoints[right] - cardPoints[left]
+            max_points = max(max_points, current_pick)
+            left, right = left - 1, right - 1
+        return max_points

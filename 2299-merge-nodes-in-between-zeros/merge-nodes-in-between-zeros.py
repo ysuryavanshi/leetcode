@@ -16,7 +16,6 @@ class Solution:
                 total = 0
                 edit_node = edit_node.next
             current_node = current_node.next
-        else:
-            edit_node.val = total
-            edit_node.next = None
+        edit_node.val = total
+        edit_node.next = None
         return head

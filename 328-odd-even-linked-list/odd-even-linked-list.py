@@ -5,24 +5,15 @@
 #         self.next = next
 class Solution:
     def oddEvenList(self, head):
-        if not head or not head.next: return head
-        odd, even = head, head.next
-        current = head.next.next
-        even.next = None
-        n = 3
-        while current != None:
-            if n % 2 == 0:
-                temp = current
-                current = current.next 
-                temp.next = None
-                even.next = temp
-                even = even.next
-            else:
-                temp = current
-                current = current.next
+        if not head: return head
+        odd = head
+        even_head = even = head.next
+        
+        while even and even.next:
+            odd.next = odd.next.next
+            odd = odd.next
 
-                temp.next = odd.next
-                odd.next = temp
-                odd = odd.next
-            n += 1
+            even.next = even.next.next
+            even = even.next
+        odd.next = even_head
         return head

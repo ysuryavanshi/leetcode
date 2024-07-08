@@ -1,4 +1,10 @@
 class Solution:
     def passThePillow(self, n: int, time: int) -> int:
-         return 1+x if (x:=time% (N:=2*n-2)) < n else N+1-x
-        
+        d = 1
+        i = 1
+        while time:
+            i += d
+            if i == 1 or i == n:
+                d *= -1
+            time -= 1
+        return i 

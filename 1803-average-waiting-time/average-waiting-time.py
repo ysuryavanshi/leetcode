@@ -1,12 +1,12 @@
 class Solution:
     def averageWaitingTime(self, customers: List[List[int]]) -> float:
         chef = 0
-        wait = []
+        wait = 0
         for arrival, time in customers:
             if chef <= arrival:
                 chef = arrival + time
-                wait.append(time)
+                wait += time
             else:
                 chef = chef + time
-                wait.append(chef - arrival)
-        return sum(wait)/len(wait)
+                wait += chef - arrival
+        return wait/len(customers)

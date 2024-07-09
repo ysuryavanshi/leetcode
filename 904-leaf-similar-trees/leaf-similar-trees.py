@@ -5,17 +5,10 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def walk(self, node, values):
-        if node and node.left == None and node.right == None:
-            values.append(node.val)
-        if node.left:
-            self.walk(node.left, values)
-        if node.right:
-            self.walk(node.right, values)
-
     def leafSimilar(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
-        root1_values = []
-        root2_values = []
-        self.walk(root1, root1_values)
-        self.walk(root2, root2_values)
-        return root1_values == root2_values
+        def dfs(root):
+            if not root: return []
+            if not root.left and not root.right: return [root.val]
+            return dfs(root.left) + dfs(root.right)
+        
+        return dfs(root1) == dfs(root2)

@@ -1,14 +1,19 @@
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
 class Solution:
     def leafSimilar(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
-        def dfs(root):
-            if not root: return []
-            if not root.left and not root.right: return [root.val]
-            return dfs(root.left) + dfs(root.right)
-        
-        return dfs(root1) == dfs(root2)
+        leafseq1=[]
+        leafseq2=[]
+        self.traversal(root1,leafseq1)
+        self.traversal(root2,leafseq2)
+        return leafseq1==leafseq2
+
+    def traversal (self,root,leafseq):
+        if root==None:
+            return
+
+        if root.left==None and root.right==None:
+            leafseq.append(root.val)
+            return
+
+        self.traversal(root.left,leafseq)
+        self.traversal(root.right,leafseq)
+        return

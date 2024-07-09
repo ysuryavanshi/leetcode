@@ -9,6 +9,6 @@ class Solution:
         def dfs(root, m):
             if not root: return 0
             m = max(root.val, m)
-            return (1 if root.val >= m else 0) + dfs(root.left, m) + dfs(root.right, m)
+            return (root.val >= m) + dfs(root.left, m) + dfs(root.right, m)
 
         return dfs(root, root.val)

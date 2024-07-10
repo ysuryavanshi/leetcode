@@ -9,10 +9,10 @@ class Solution:
             'D': 500,
             'M': 1000,
         }
-        stack = deque()
+        stack = []
         for c in s:
             num = m[c]
             if stack and stack[-1] < num:
-                num -= stack.pop()
+                num -= stack.pop(-1)
             stack.append(num)
         return sum(stack)

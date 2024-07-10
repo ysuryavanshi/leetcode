@@ -4,6 +4,5 @@ class Solution:
         for log in logs:
             if log == '../':
                 if ans > 0: ans -= 1
-            elif log == './': pass
-            else: ans += 1
+            elif log != './': ans += 1
         return ans

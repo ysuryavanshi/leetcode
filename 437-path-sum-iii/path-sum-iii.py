@@ -1,21 +1,18 @@
 class Solution:
     def pathSum(self, root, targetSum) -> int:
         self.total = 0
-
-        def helper(root, curr):
-            if not root:
-                return
-            helper(root.left, curr + root.val)
-            helper(root.right, curr + root.val)
-            if curr + root.val == targetSum:
-                self.total += 1
+        self.lookup = defaultdict(int)
+        self.lookup[targetSum] = 1
         
-        def dfs(root):
+        def dfs(root, root_sum):
             if not root:
                 return
-            helper(root, 0)
-            dfs(root.left)
-            dfs(root.right)
+            root_sum += root.val
+            self.total += self.lookup[root_sum]
+            self.lookup[root_sum + targetSum] += 1
+            dfs(root.left, root_sum)
+            dfs(root.right, root_sum)
+            self.lookup[root_sum + targetSum] -= 1
 
-        dfs(root)
+        dfs(root, 0)
         return self.total

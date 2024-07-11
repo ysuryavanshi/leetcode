@@ -1,17 +1,21 @@
 class Solution:
     def pathSum(self, root, targetSum) -> int:
-        sums = defaultdict(int)
-        sums[0] = 1
+        self.total = 0
 
-        def dfs(root, total):
-            count = 0
-            if root:
-                total += root.val
-                count = sums[total - targetSum]
-                
-                sums[total] += 1
-                count += dfs(root.left, total) + dfs(root.right, total)
-                sums[total] -= 1
-            return count
+        def helper(root, curr):
+            if not root:
+                return
+            helper(root.left, curr + root.val)
+            helper(root.right, curr + root.val)
+            if curr + root.val == targetSum:
+                self.total += 1
+        
+        def dfs(root):
+            if not root:
+                return
+            helper(root, 0)
+            dfs(root.left)
+            dfs(root.right)
 
-        return dfs(root, 0)
+        dfs(root)
+        return self.total

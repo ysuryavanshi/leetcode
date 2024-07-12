@@ -4,7 +4,7 @@ class Solution:
             count = 0
             stack = []
             for s in string:
-                if s in ['a', 'b']:
+                if s in 'ab':
                     if stack and stack[-1] == substring[0] and s == substring[1]:
                         count += 1
                         _ = stack.pop(-1)

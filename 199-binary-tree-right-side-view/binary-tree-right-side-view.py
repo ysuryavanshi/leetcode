@@ -11,12 +11,10 @@ class Solution:
         ans = []
         
         while stack:
-            n = len(stack)
-            for i in range(n):
-                node = stack.pop(0)
-                if node.left: stack.append(node.left)
-                if node.right: stack.append(node.right)
-            if node:
-                ans.append(node.val)
-        
+            ans.append(stack[-1].val)
+            n = []
+            for node in stack:
+                if node.left: n.append(node.left)
+                if node.right: n.append(node.right)
+            stack, n = n, []
         return ans

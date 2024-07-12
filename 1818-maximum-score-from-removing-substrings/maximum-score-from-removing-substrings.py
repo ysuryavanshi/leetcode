@@ -2,12 +2,12 @@ class Solution:
     def maximumGain(self, s: str, x: int, y: int) -> int:
         def helper(string, substring):
             count = 0
-            stack = []
+            stack = deque()
             for s in string:
                 if s in 'ab':
                     if stack and stack[-1] == substring[0] and s == substring[1]:
                         count += 1
-                        _ = stack.pop(-1)
+                        _ = stack.pop()
                     else: stack.append(s)
                 else: stack.append(s)
             return ''.join(stack), count

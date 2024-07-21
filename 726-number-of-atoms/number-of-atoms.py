@@ -1,33 +1,44 @@
 class Solution:
     def countOfAtoms(self, formula: str) -> str:
-        stack = [{}]
-        i, n = 0, len(formula)
 
+        stack = [defaultdict(int)]
+        i = 0
+        n = len(formula)
+        
         while i < n:
             if formula[i] == '(':
-                stack.append({})
+                stack.append(defaultdict(int))
                 i += 1
             elif formula[i] == ')':
-                top = stack.pop()
                 i += 1
-                i_start = i
+                start = i
                 while i < n and formula[i].isdigit():
                     i += 1
-                multiplier = int(formula[i_start:i] or 1)
-                for element, count in top.items():
-                    stack[-1][element] = stack[-1].get(element, 0) + count * multiplier
+                multiplicity = int(formula[start:i] or 1)
+                top = stack.pop()
+                for elem, cnt in top.items():
+                    stack[-1][elem] += cnt * multiplicity
             else:
-                i_start = i
+                start = i
                 i += 1
                 while i < n and formula[i].islower():
                     i += 1
-                element = formula[i_start:i]
-                i_start = i
+                element = formula[start:i]
+                start = i
                 while i < n and formula[i].isdigit():
                     i += 1
-                count = int(formula[i_start:i] or 1)
-                stack[-1][element] = stack[-1].get(element, 0) + count
-
-        result = stack.pop()
-        sorted_elements = sorted(result.keys())
-        return ''.join(f"{element}{(result[element] if result[element] > 1 else '')}" for element in sorted_elements)
+                count = int(formula[start:i] or 1)
+                stack[-1][element] += count
+    
+        final_count = stack.pop()
+        sorted_elements = sorted(final_count.items())
+        
+        result = []
+        for element, count in sorted_elements:
+            if count > 1:
+                result.append(f"{element}{count}")
+            else:
+                result.append(element)
+        
+        return "".join(result)
+        

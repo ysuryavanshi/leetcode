@@ -9,4 +9,4 @@ class Solution:
                 val += mapping[int(v)]
             mapped.append(int(val))
 
-        return [y for x, y in sorted(zip(mapped, nums), key=lambda x: x[0])]
+        return [y for _, y in sorted(zip(mapped, nums), key=lambda x: x[0])]

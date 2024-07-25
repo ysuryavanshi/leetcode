@@ -1,12 +1,12 @@
 class Solution:
     def sortJumbled(self, mapping: List[int], nums: List[int]) -> List[int]:
         mapping = [str(v) for v in mapping]
-        mapped = []
 
-        for num in nums:
+        def mapInt(num):
             val = ''
             for v in str(num):
                 val += mapping[int(v)]
-            mapped.append(int(val))
+            return int(val)
 
-        return [y for _, y in sorted(zip(mapped, nums), key=lambda x: x[0])]
+        nums.sort(key=mapInt)
+        return nums

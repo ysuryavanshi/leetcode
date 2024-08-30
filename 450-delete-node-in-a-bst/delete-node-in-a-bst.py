@@ -1,17 +1,5 @@
 class Solution:
-    def successor(self, root):
-        root = root.right
-        while root.left: root = root.left
-        return root.val
-
-    def predecessor(self, root):
-        root = root.left
-        while root.right: root = root.right
-        return root.val
-    
     def deleteNode(self, root: TreeNode, key: int):
-
-
         if not root:
             return None
 
@@ -20,12 +8,13 @@ class Solution:
         elif key < root.val:
             root.left = self.deleteNode(root.left, key)
         else:
-            if not root.left and not root.right:
-                root = None
-            elif root.right:
-                root.val = self.successor(root)
-                root.right = self.deleteNode(root.right, root.val)
-            else:
-                root.val = self.predecessor(root)
-                root.left = self.deleteNode(root.left, root.val)
+            if not root.left:
+                return root.right
+            elif not root.right:
+                return root.left
+            
+            cur = root.right
+            while cur.left: cur = cur.left
+            root.val = cur.val
+            root.right = self.deleteNode(root.right, root.val)
         return root

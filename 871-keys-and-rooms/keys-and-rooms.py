@@ -4,6 +4,8 @@ class Solution:
         stack = [0]
 
         while stack:
+            if len(visited) == len(rooms) :
+                return True
             room = stack.pop()
             visited.add(room)
             for key in rooms[room]:

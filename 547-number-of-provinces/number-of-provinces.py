@@ -1,28 +1,16 @@
 class Solution:
-    def findCircleNum(self, isConnected: list[list[int]]) -> int:
-        
-        graph = defaultdict(list)
-        
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
         n = len(isConnected)
-        for i in range(n):
-            for j in range(i+1,n):
-                if isConnected[i][j]==1:
-                    graph[i].append(j)
-                    graph[j].append(i)
-        
-        visit = [False]*n
-        
-        def dfs(u):
-            for v in graph[u]:
-                if visit[v] == False:
-                    visit[v] = True
-                    dfs(v)
-        
+        visited = [False] * n
         count = 0
+
+        def dfs(i):
+            visited[i] = True
+            for j in range(n):
+                if not visited[j] and isConnected[i][j]: dfs(j)
+
         for i in range(n):
-            if visit[i] == False:
-                count += 1
-                visit[i] = True
+            if not visited[i]:
                 dfs(i)
-        
-        return count
+                count += 1
+        return count        

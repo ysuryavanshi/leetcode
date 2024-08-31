@@ -1,5 +1,5 @@
 class Solution:
-    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+    def calcEquation(self, equations, values, queries):
         graph = defaultdict(dict)
 
         for (u, v), val in zip(equations, values):

@@ -1,10 +1,14 @@
 class Solution:
     def getLucky(self, s: str, k: int) -> int:
-        s = ''.join([str(ord(i) - 96) for i in s])
+        numeric_s = ''
+        for c in s:
+            numeric_s += str(ord(c) - 96)
+        
         while k:
             su = 0
-            for i in s:
-                su += int(i)
-            s = str(su)
+            for d in numeric_s:
+                su += int(d)
+            numeric_s = str(su)
             k -= 1
-        return int(s)
+
+        return int(numeric_s)

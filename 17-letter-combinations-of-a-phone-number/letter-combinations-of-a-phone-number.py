@@ -20,5 +20,4 @@ class Solution:
                 string = q.popleft()
                 for c in chars:
                     q.append(string + c)
-
-        return list(q)
+        return q

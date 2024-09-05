@@ -13,11 +13,13 @@ class Solution:
             '9': 'wxyz'
         }
 
-        q = deque([''])
-        for d in digits:
-            chars = phone_map[d]
-            for _ in range(len(q)):
-                string = q.popleft()
-                for c in chars:
-                    q.append(string + c)
-        return q
+        def backtrack(combo, n_digits):
+            if not n_digits:
+                ans.append(combo)
+            else:
+                for l in phone_map[n_digits[0]]:
+                    backtrack(combo + l, n_digits[1:])
+        
+        ans = []
+        backtrack('', digits)
+        return ans

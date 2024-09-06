@@ -1,6 +1,9 @@
 class Solution:
     def tribonacci(self, n: int) -> int:
-        arr = [0, 1, 1]
+        if n == 0: return 0
+        if n == 1 or n == 2: return 1
+        a, b, c = 0, 1, 1
+
         for i in range(3, n + 1):
-            arr.append(arr[-3] + arr[-2] + arr[-1])
-        return arr[n]
+            a, b, c = b, c, a + b + c
+        return c

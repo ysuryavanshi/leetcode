@@ -11,9 +11,9 @@ class Solution:
             head = head.next
         node = head
 
-        while node:
-            while node.next and node.next.val in nums:
+        while node and node.next:
+            if node.next.val in nums:
                 node.next = node.next.next
-            node = node.next
-        
+            else:
+                node = node.next
         return head

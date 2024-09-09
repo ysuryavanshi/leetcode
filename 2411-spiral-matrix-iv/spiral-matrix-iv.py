@@ -5,18 +5,33 @@
 #         self.next = next
 class Solution:
     def spiralMatrix(self, m: int, n: int, head):
-        dr = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-        c_dr = 0
-
-        ans = [[-1 for _ in range(n)] for _ in range(m)]
-        i = j = 0
+        ans = [[-1]*n for _ in range(m)]
+        
+        top_row, bottom_row, left_col, right_col = 0, m - 1, 0, n - 1
 
         while head:
-            ans[i][j], head = head.val, head.next
-            di, dj = i + dr[c_dr][0], j + dr[c_dr][1]
-            if di == m or dj == n or ans[di][dj] != -1:
-                c_dr = (c_dr + 1) % 4
-                di, dj = i + dr[c_dr][0], j + dr[c_dr][1]
-            i, j = di, dj
-            
+            for j in range(left_col, right_col + 1):
+                if head:
+                    ans[top_row][j] = head.val
+                    head = head.next
+            top_row += 1
+
+            for i in range(top_row, bottom_row + 1):
+                if head:
+                    ans[i][right_col] = head.val
+                    head = head.next
+            right_col -= 1
+
+            for j in range(right_col, left_col - 1, -1):
+                if head:
+                    ans[bottom_row][j] = head.val
+                    head = head.next
+            bottom_row -= 1
+
+            for i in range(bottom_row, top_row - 1, -1):
+                if head:
+                    ans[i][left_col] = head.val
+                    head = head.next
+            left_col += 1
+        
         return ans

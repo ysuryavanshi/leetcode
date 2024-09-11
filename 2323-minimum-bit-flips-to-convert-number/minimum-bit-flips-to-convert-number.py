@@ -1,7 +1,9 @@
 class Solution:
     def minBitFlips(self, start: int, goal: int) -> int:
-        flips = 0
-        while start or goal:
-            if start % 2 != goal % 2: flips += 1
-            start, goal = start // 2, goal //2
-        return flips
+        xor = start ^ goal
+        ans = 0
+
+        while xor > 0:
+            ans += xor & 1
+            xor >>= 1
+        return ans

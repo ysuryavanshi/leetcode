@@ -1,17 +1,14 @@
 class Solution:
     def findMinArrowShots(self, points: List[List[int]]) -> int:
         points.sort()
-        ans = 0
+        ans = 1
 
-        window = None
-        for i in range(len(points)):
-            if not window: window = points[i]
-            elif points[i][0] <= window[1]:
-                window[0] = points[i][0]
-                if points[i][1] < window[1]: window[1] = points[i][1]
-            else:
+        end = points[0][1]
+
+        for balloon in points[1:]:
+            if balloon[0] > end:
                 ans += 1
-                window = points[i]
-
-        if window: ans+= 1
+                end = balloon[1]
+            else:
+                end = min(end, balloon[1])
         return ans

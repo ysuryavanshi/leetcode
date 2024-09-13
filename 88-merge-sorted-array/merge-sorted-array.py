@@ -3,11 +3,13 @@ class Solution:
         """
         Do not return anything, modify nums1 in-place instead.
         """
-        j = 0
-        for i, num in enumerate(nums2):
-            while j < m + i and num >= nums1[j]:
-                j += 1
-            nums1.insert(j, num)
-            j += 1
-        for _ in range(n):
-            _ = nums1.pop()
+        a, b, write_index = m - 1, n - 1, m + n - 1
+
+        while b >= 0:
+            if a >= 0 and nums1[a] > nums2[b]:
+                nums1[write_index] = nums1[a]
+                a -= 1
+            else:
+                nums1[write_index] = nums2[b]
+                b -= 1
+            write_index -= 1

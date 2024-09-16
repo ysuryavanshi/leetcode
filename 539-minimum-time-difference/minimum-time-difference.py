@@ -2,13 +2,11 @@ class Solution:
     def findMinDifference(self, timePoints: List[str]) -> int:
         n = len(timePoints)
         for i in range(n):
-            h, m = timePoints[i].split(':')
-            timePoints[i] = int(h) * 60 + int(m)
+            timePoints[i] = int(timePoints[i][:2]) * 60 + int(timePoints[i][3:])
 
-        ans = 720
         timePoints.sort()
-        for i in range(n):
-            if (diff := abs(timePoints[i] - timePoints[i - 1])) > 720:
-                diff = 1440 - diff
-            ans = min(ans, diff)
+        ans = 1440 + timePoints[0] - timePoints[-1]
+
+        for i in range(1, n):
+            ans = min(ans, (timePoints[i] - timePoints[i-1]))
         return ans

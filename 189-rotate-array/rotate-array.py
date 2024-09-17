@@ -3,6 +3,7 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
+        k = k % len(nums)
         while k:
             nums.insert(0, nums.pop())
             k -= 1

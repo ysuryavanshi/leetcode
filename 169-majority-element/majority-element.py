@@ -1,12 +1,10 @@
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
-        d = defaultdict(int)
+        count = c = 0
 
-        for num in nums:
-            d[num] += 1
-        
-        n = len(nums)//2
-        for key, value in d.items():
-            if value > n:
-                return key
-        return
+        for n in nums:
+            if count == 0: c = n
+            
+            if n == c: count += 1
+            else: count -= 1
+        return c

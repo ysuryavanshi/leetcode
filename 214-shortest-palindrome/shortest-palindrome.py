@@ -3,13 +3,14 @@ class Solution:
         prefix, suffix, base = 0, 0, 29
         last_index = 0
         power = 1
+        mod = 10**9 + 7
 
         for i, c in enumerate(s):
             char = ord(c) - ord('a') + 1
-            prefix = ((prefix * base) + char)
+            prefix = ((prefix * base) % mod + char) % mod 
 
-            suffix = (suffix + char * power)
-            power = (power * base)
+            suffix = (suffix + char * power) % mod
+            power = (power * base) % mod
 
             if prefix == suffix:
                 last_index = i

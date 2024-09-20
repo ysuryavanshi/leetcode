@@ -1,11 +1,12 @@
 class Solution:
     def jump(self, nums: List[int]) -> int:
-        n = len(nums)
-        jumps = [0] + [float(inf)] * (n - 1)
-        for i, num in enumerate(nums):
-            j = 1
-            while i + j < n and j <= num:
-                if jumps[i + j] > jumps[i] + 1:
-                    jumps[i + j] = jumps[i] + 1
-                j += 1
-        return jumps[-1]
+        reach = 0
+        count = 0
+        last = 0
+
+        for i in range(len(nums) - 1):
+            reach = max(reach, i + nums[i])
+            if i == last:
+                last = reach
+                count += 1
+        return count

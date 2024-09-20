@@ -8,5 +8,4 @@ class Solution:
                 if jumps[i + j] > jumps[i] + 1:
                     jumps[i + j] = jumps[i] + 1
                 j += 1
-        print(jumps)
         return jumps[-1]

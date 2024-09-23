@@ -13,6 +13,6 @@ class Solution:
         for c in s:
             num = m[c]
             if stack and stack[-1] < num:
-                num -= stack.pop(-1)
+                num -= stack.pop()
             stack.append(num)
         return sum(stack)

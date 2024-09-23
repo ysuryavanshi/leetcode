@@ -1,15 +1,16 @@
 class Solution:
     def minExtraChar(self, s: str, dictionary: List[str]) -> int:
-        max_val = len(s) + 1
-        dp = [max_val] * (len(s) + 1)
-        dp[0] = 0
         dictionary = set(dictionary)
+        dp = {len(s): 0}
 
-        for i in range(1, len(s) + 1):
-            dp[i] = dp[i - 1] + 1
+        def dfs(i):
+            if i == len(s): return 0
+            if i in dp: return dp[i]
 
-            for l in range(1, i + 1):
-                if s[i-l:i] in dictionary:
-                    dp[i] = min(dp[i], dp[i-l])
-
-        return dp[-1]
+            res = 1 + dfs(i + 1)
+            for j in range(i, len(s)):
+                if s[i:j+1] in dictionary:
+                    res = min(res, dfs(j+1))
+            dp[i] = res
+            return res
+        return dfs(0)

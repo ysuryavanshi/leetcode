@@ -1,9 +1,8 @@
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-        prefix = ''
-        for c in zip(*strs):
-            if len(set(c)) == 1:
-                prefix += c[0]
-            else:
+        ans = ''
+        for x in zip(*strs):
+            if len(set(x)) != 1:
                 break
-        return prefix
+            ans += x[0]
+        return ans

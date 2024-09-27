@@ -15,9 +15,9 @@ class MyCalendarTwo:
             total += j
 
             if total == 3:
-                self.calendar.remove((start,1))
-                self.calendar.remove((end,-1))
-                return False 
+                self.calendar.remove((start, 1))
+                self.calendar.remove((end, -1))
+                return False
         return True
 
 

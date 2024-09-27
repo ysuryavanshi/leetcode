@@ -1,12 +1,22 @@
-from sortedcontainers import SortedList
-
 class MyCalendarTwo:
 
     def __init__(self):
-        self.calendar = SortedList()
-        
+        self.overlapping = []
+        self.non_overlapping = []
 
     def book(self, start: int, end: int) -> bool:
+        for s, e in self.overlapping:
+            if s < end and start < e:
+                return False
+
+        for s, e in self.non_overlapping:
+            if s < end and start < e:
+                self.overlapping.append((max(start, s), min(end, e)))
+        
+        self.non_overlapping.append((start, end))
+        return True
+
+
         self.calendar.add((start, 1))
         self.calendar.add((end, -1))
 

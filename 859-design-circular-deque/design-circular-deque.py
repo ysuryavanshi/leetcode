@@ -1,75 +1,46 @@
-class DoubleLinkedList:
-    def __init__(self, value, nxt, previous):
-        self.value = value
-        self.next = nxt
-        self.previous = previous
-
-
 class MyCircularDeque:
 
     def __init__(self, k: int):
-        self.head = None
-        self.tail = None
-        self.size = 0
+        self.deque = []
         self.max_length = k        
 
     def insertFront(self, value: int) -> bool:
-        if self.isFull(): return False
-        if self.head is None:
-            self.head = DoubleLinkedList(value, None, None)
-            self.tail = self.head
-        else:
-            new = DoubleLinkedList(value, self.head, None)
-            self.head.previous = new
-            self.head = new
-        self.size += 1
-        return True
+        if len(self.deque) < self.max_length:
+            self.deque.insert(0, value)
+            return True
+        return False
 
     def insertLast(self, value: int) -> bool:
-        if self.isFull(): return False
-        if self.tail is None:
-            self.tail = DoubleLinkedList(value, None, None)
-            self.head = self.tail
-        else:
-            new = DoubleLinkedList(value, None, self.tail)
-            self.tail.next = new
-            self.tail = new
-        self.size += 1
-        return True
+        if len(self.deque) < self.max_length:
+            self.deque.append(value)
+            return True
+        return False
 
     def deleteFront(self) -> bool:
-        if self.isEmpty(): return False
-        if self.size == 1:
-            self.head = None
-            self.tail = None
-        else:
-            self.head = self.head.next
-        
-        self.size -= 1
-        return True
+        if self.deque:
+            self.deque.pop(0)
+            return True
+        return False
 
     def deleteLast(self) -> bool:
-        if self.isEmpty(): return False
-        if self.size == 1:
-            self.head = None
-            self.tail = None
-        else:
-            self.tail = self.tail.previous
-        
-        self.size -= 1
-        return True
+        if self.deque:
+            self.deque.pop(-1)
+            return True
+        return False 
 
     def getFront(self) -> int:
-        return -1 if self.isEmpty() else self.head.value
+        if self.deque: return self.deque[0]
+        return -1
 
     def getRear(self) -> int:
-        return -1 if self.isEmpty() else self.tail.value
+        if self.deque: return self.deque[-1]
+        return -1
 
     def isEmpty(self) -> bool:
-        return True if self.size == 0 else False
+        return False if self.deque else True
 
     def isFull(self) -> bool:
-        return self.size == self.max_length
+        return len(self.deque) == self.max_length
 
 
 # Your MyCircularDeque object will be instantiated and called as such:

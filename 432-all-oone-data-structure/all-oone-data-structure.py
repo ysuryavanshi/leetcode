@@ -68,8 +68,6 @@ class LinkedList:
 class AllOne:
 
     def __init__(self):
-        self.min_count = 0
-        self.max_count = 0
         self.bucket = LinkedList()
         self.mapper = {}        
 

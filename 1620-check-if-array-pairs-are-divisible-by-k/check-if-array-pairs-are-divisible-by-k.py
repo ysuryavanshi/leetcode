@@ -1,13 +1,13 @@
 class Solution:
     def canArrange(self, arr: List[int], k: int) -> bool:
-        mapp = collections.defaultdict(int)
-        count = 0
-        for i, num in enumerate(arr):
-            key = k - (num % k)
-            if key in mapp and mapp[key] >= 1:
-                count += 1
-                mapp[key] -= 1
+        rem = [num % k for num in arr]
+        mapp = Counter(rem)
+
+        for key in mapp:
+            if key == 0 or 2 * key == k:
+                if mapp[key] % 2 != 0:
+                    return False
             else:
-                mapp[(num % k) or k] += 1
-        return count == len(arr) // 2
-        
+                if mapp[(k - key) % k] != mapp[key]:
+                    return False
+        return True

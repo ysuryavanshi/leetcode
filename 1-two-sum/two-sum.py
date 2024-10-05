@@ -8,5 +8,4 @@ class Solution:
             else:
                 remaining = target - number
                 mapp[remaining] = i
-        print(mapp)
         return None

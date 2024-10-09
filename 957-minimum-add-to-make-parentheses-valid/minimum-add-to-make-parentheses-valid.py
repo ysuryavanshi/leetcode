@@ -1,9 +1,10 @@
 class Solution:
     def minAddToMakeValid(self, s: str) -> int:
-        stack = []
+        left = right = 0
+
         for b in s:
-            if stack and stack[-1] == '(' and b == ')':
-                _ = stack.pop()
+            if b == '(': right += 1
             else:
-                stack.append(b)
-        return len(stack)
+                if right: right -= 1
+                else: left += 1
+        return left + right

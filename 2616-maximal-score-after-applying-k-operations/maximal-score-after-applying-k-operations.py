@@ -6,6 +6,9 @@ class Solution:
         while k:
             n = heapq.heappop(nums)
             ans += n
+            if n == 1:
+                ans += k
+                break
             heapq.heappush(nums, floor(n/3))
             k -= 1
         return - 1 * ans

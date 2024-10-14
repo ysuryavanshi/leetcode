@@ -6,9 +6,9 @@
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        nodes = []
+        nodes = set()
         while head and head.next != None:
             if head in nodes: return True
-            nodes.append(head)
+            nodes.add(head)
             head = head.next
         return False

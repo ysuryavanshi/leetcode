@@ -6,9 +6,9 @@
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
+        nodes = []
         while head and head.next != None:
-            if hasattr(head, 'visited'):
-                return True
-            head.visited = True
+            if head in nodes: return True
+            nodes.append(head)
             head = head.next
         return False

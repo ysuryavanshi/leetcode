@@ -10,16 +10,28 @@ class Node:
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
         if not head: return None
-        
-        mapp = {}
-        cur = head
-        while cur:
-            mapp[cur] = Node(cur.val)
-            cur = cur.next
 
         cur = head
         while cur:
-            mapp[cur].next = mapp.get(cur.next)
-            mapp[cur].random = mapp.get(cur.random)
-            cur = cur.next
-        return mapp[head]
+            new_node = Node(cur.val, cur.next)
+            cur.next = new_node
+            cur = new_node.next
+        
+        cur = head
+        while cur:
+            if cur.random:
+                cur.next.random = cur.random.next
+            cur = cur.next.next
+        
+        old_head = head
+        new_head = head.next
+        cur_old = old_head
+        cur_new = new_head
+
+        while cur_old:
+            cur_old.next = cur_old.next.next
+            cur_new.next = cur_new.next.next if cur_new.next else None
+            cur_old = cur_old.next
+            cur_new = cur_new.next
+        
+        return new_head

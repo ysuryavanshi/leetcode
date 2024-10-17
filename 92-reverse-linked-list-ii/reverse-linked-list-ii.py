@@ -12,11 +12,18 @@ class Solution:
 
         for _ in range(left - 1):
             prev = prev.next
-        
-        current = prev.next
 
-        for _ in range(right - left):
-            next_node = current.next
-            current.next, next_node.next, prev.next = next_node.next, prev.next, next_node
+        current = prev.next
+        stack = []
+
+        for _ in range(right - left + 1):
+            stack.append(current)
+            current = current.next
+
+        while stack:
+            prev.next = stack.pop()
+            prev = prev.next
         
+        prev.next = current
+
         return dummy.next

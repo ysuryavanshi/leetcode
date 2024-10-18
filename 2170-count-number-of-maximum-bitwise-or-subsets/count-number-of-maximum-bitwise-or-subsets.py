@@ -4,15 +4,11 @@ class Solution:
         for n in nums:
             max_or |= n
         
-        ans = 0
         def dfs(i, cur_or):
-            nonlocal max_or, ans
+            nonlocal max_or
             if i == len(nums):
-                if cur_or == max_or: ans += 1
-                return
+                return 1 if cur_or == max_or else 0
             
-            dfs(i + 1, cur_or)
-            dfs(i + 1, cur_or | nums[i])
+            return (dfs(i + 1, cur_or) + dfs(i + 1, cur_or | nums[i]))
 
-        dfs(0, 0)
-        return ans
+        return dfs(0, 0)

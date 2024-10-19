@@ -7,6 +7,5 @@ class Solution:
         while len(s) < k:
             s += '1' + s.replace('0', '_').replace('1', '0').replace('_', '1')[::-1]
 
-        print(s)
         return s[k-1]
     

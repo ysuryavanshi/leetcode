@@ -1,11 +1,17 @@
 class Solution:
     def findKthBit(self, n: int, k: int) -> str:
-        if k == 1: return '0'
-        elif k == (2 ** n) - 1: return '1'
+        length = 2 ** n - 1
         
-        s = '0'
-        while len(s) < k:
-            s += '1' + s.replace('0', '_').replace('1', '0').replace('_', '1')[::-1]
+        def helper(length, k):
+            if length == 1: return '0'
 
-        return s[k-1]
-    
+            mid = length // 2
+            if k <= mid:
+                return helper(mid, k)
+            elif k > mid + 1:
+                ans = helper(mid, 1 + length - k)
+                return '0' if ans == '1' else '1'
+            else:
+                return '1'
+        
+        return helper(length, k)

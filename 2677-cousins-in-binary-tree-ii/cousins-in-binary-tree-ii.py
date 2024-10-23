@@ -19,15 +19,21 @@ class Solution:
                 if node.right: q.append(node.right)
             level_sum.append(cur_sum)
 
-        q.append((root, root.val))
+        root.val = 0
+        q.append(root)
         lvl = 0
         while q:
             for i in range(len(q)):
-                node, sibling_sum = q.popleft()
-                node.val = level_sum[lvl] - sibling_sum
+                node = q.popleft()
+                
+                child_sum = 0
+                if node.left: child_sum += node.left.val
+                if node.right: child_sum += node.right.val
                 if node.left:
-                    q.append((node.left, node.left.val + (node.right.val if node.right else 0)))
+                    node.left.val = level_sum[lvl + 1] - child_sum
+                    q.append(node.left)
                 if node.right:
-                    q.append((node.right, node.right.val + (node.left.val if node.left else 0)))
+                    node.right.val = level_sum[lvl + 1] - child_sum
+                    q.append(node.right)
             lvl += 1
         return root

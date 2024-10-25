@@ -1,9 +1,3 @@
-class Trie:
-    def __init__(self):
-        self.children = {}
-        self.end = False
-
-
 class Solution:
     def removeSubfolders(self, folder: List[str]) -> List[str]:
         folder.sort()
@@ -11,7 +5,6 @@ class Solution:
         ans = [folder[0]]
 
         for i in range(1, len(folder)):
-            last_folder = ans[-1] + '/'
-            if not folder[i].startswith(last_folder):
+            if not folder[i].startswith(ans[-1] + '/'):
                 ans.append(folder[i])
         return ans

@@ -16,5 +16,5 @@ class Solution:
             for node in stack:
                 if node.left: n.append(node.left)
                 if node.right: n.append(node.right)
-            stack, n = n, []
+            stack = n
         return ans

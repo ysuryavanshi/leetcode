@@ -6,11 +6,11 @@ class Solution:
 
         for i in range(m):
             dp[i][0] = int(matrix[i][0])
-            ans = max(ans, dp[i][0])
+            ans = ans or dp[i][0]
         
         for i in range(1, n):
             dp[0][i] = int(matrix[0][i])
-            ans = max(ans, dp[0][i])
+            ans = ans or dp[0][i]
 
         for i in range(1, m):
             for j in range(1, n):

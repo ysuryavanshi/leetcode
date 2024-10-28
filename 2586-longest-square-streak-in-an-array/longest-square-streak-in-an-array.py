@@ -6,7 +6,6 @@ class Solution:
         ans = 0
         for n in nums:
             temp, count = n, 1
-            while (temp := temp ** 2) in n_set:
-                count += 1
+            while (temp := temp ** 2) in n_set: count += 1
             ans = max(ans, count)
         return ans if ans > 1 else -1

@@ -1,17 +1,23 @@
 class Solution:
-    def minimumTotalDistance(self, robot: List[int], factory: List[List[int]]) -> int:
-        robot.sort()
-        factory.sort()
-        m, n = len(robot), len(factory)
-        dp = [[0]*(n+1) for _ in range(m+1)] 
-        for i in range(m): dp[i][-1] = inf 
-        for j in range(n-1, -1, -1): 
-            prefix = 0 
-            qq = deque([(m, 0)])
-            for i in range(m-1, -1, -1): 
-                prefix += abs(robot[i] - factory[j][0])
-                if qq[0][0] > i+factory[j][1]: qq.popleft()
-                while qq and qq[-1][1] >= dp[i][j+1] - prefix: qq.pop()
-                qq.append((i, dp[i][j+1] - prefix))
-                dp[i][j] = qq[0][1] + prefix
-        return dp[0][0]
+    def minimumTotalDistance(self, robots: List[int], factories: List[List[int]]) -> int:
+        robots.sort()
+        factories.sort()
+
+        nfactories = []
+        for f in factories:
+            nfactories.extend([f[0]] * f[1])
+
+        dp = [[-1] * len(nfactories) for _ in range(len(robots))]
+
+        def helper(r, f):
+            if r < 0: return 0
+            if f < 0: return float('inf')
+            if dp[r][f] != -1: return dp[r][f]
+            
+            include = abs(robots[r] - nfactories[f]) + helper(r - 1, f - 1)
+            exclude = helper(r, f - 1)
+            dp[r][f] = min(include, exclude)
+            return dp[r][f]
+
+        helper(len(robots) - 1, len(nfactories) - 1)
+        return dp[-1][-1]

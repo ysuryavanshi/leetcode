@@ -1,15 +1,9 @@
 class Solution:
     def canSortArray(self, nums: List[int]) -> bool:
-        p_max = c_min = c_max = p_count = 0
-        for n in nums:
-            c_count = n.bit_count()
-            if p_count == c_count:
-                c_min = min(c_min, n)
-                c_max = max(c_max, n)
-            elif c_min < p_max:
-                return False
-            else:
-                p_max = c_max
-                c_min = c_max = n
-                p_count = c_count
-        return c_min >= p_max
+        n = len(nums)
+
+        for _ in range(n):
+            for i in range(n - 1):
+                if nums[i].bit_count() == nums[i + 1].bit_count() and nums[i + 1] < nums[i]:
+                    nums[i], nums[i + 1] = nums[i + 1], nums[i]
+        return nums == sorted(nums)

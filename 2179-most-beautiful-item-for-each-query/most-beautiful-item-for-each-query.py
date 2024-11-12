@@ -9,7 +9,7 @@ class Solution:
 
         ans = [0] * len(queries)
         for i, q in enumerate(queries):
-            idx = bisect_right(items, [q, float('inf')])
+            idx = bisect_left(items, [q, float('inf')])
             if idx == 0: ans[i] = 0
             elif idx == len(items):
                 ans[i] = items[-1][1]

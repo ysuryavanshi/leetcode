@@ -7,19 +7,21 @@ class Solution:
     def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         if not head or k == 0: return head
 
-        values = []
-        node = head
-        while node:
-            values.append(node.val)
-            node = node.next
-        k = k % len(values)
+        element = head
+        n = 1
+        while element.next:
+            element = element.next
+            n += 1
 
-        if k == 0: return head
+        k = k % n
+        element.next = head
 
-        values =  values[len(values)-k:] + values[:len(values)-k]
-        root = node = ListNode()
-        for value in values:
-            new_node = ListNode(value)
-            node.next = new_node
-            node = node.next
-        return root.next
+        temp_node = head
+        for _ in range(n - k - 1):
+            temp_node = temp_node.next
+        
+        ans = temp_node.next
+        temp_node.next = None
+
+        return ans
+

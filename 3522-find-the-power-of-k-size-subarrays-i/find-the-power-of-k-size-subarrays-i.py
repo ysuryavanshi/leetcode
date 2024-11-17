@@ -6,7 +6,7 @@ class Solution:
         for i in range(1, n):
             if nums[i - 1] + 1 == nums[i]:
                 last = longest_inc[-1]
-                longest_inc.append((last[0] + 1, max(nums[i], last[1])))
+                longest_inc.append((last[0] + 1, nums[i]))
             else:
                 longest_inc.append((1, nums[i]))
         

@@ -4,7 +4,7 @@ class Solution:
 
         for row in matrix:
             if row[0] == 0:
-                row = tuple([0 if i else 1 for i in row])
+                row = tuple([i ^ 1 for i in row])
             else:
                 row = tuple(row)
             mapp[row] += 1

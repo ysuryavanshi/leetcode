@@ -1,9 +1,11 @@
 class Solution:
-    def maxEqualRowsAfterFlips(self, mat: List[List[int]]) -> int:
-        pat_freq = Counter()
-        
-        for r in mat:
-            pattern = tuple(r) if r[0] == 0 else tuple(bit ^ 1 for bit in r)
-            pat_freq[pattern] += 1
-            
-        return max(pat_freq.values())
+    def maxEqualRowsAfterFlips(self, matrix: List[List[int]]) -> int:
+        mapp = defaultdict(int)
+
+        for row in matrix:
+            if row[0] == 0:
+                row = tuple([0 if i else 1 for i in row])
+            else:
+                row = tuple(row)
+            mapp[row] += 1
+        return max(mapp.values())

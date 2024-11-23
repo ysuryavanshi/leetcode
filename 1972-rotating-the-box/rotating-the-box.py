@@ -1,17 +1,17 @@
 class Solution:
     def rotateTheBox(self, box: List[List[str]]) -> List[List[str]]:
-        ROWS, COLS = len(box), len(box[0])
+        m, n = len(box), len(box[0])
 
-        res = [["."] * ROWS for _ in range(COLS)]
+        ans = [['.'] * m for _ in range(n)]
 
-        for r in range(ROWS):
-            i = COLS - 1
-            for c in reversed(range(COLS)):
-                if box[r][c] == "#":
-                    res[i][ROWS - r - 1] = "#"
+        for row in range(m):
+            i = n - 1
+            for col in reversed(range(n)):
+                if box[row][col] == '#':
+                    ans[i][m - row - 1] = '#'
+                    box[row][col] = '.'
                     i -= 1
-                elif box[r][c] == "*":
-                    res[c][ROWS - r - 1] = "*"
-                    i = c - 1
-
-        return res
+                elif box[row][col] == '*':
+                    ans[col][m - row - 1] = '*'
+                    i = col - 1
+        return ans

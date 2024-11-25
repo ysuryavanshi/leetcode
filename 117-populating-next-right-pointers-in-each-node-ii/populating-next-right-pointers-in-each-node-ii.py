@@ -17,11 +17,11 @@ class Solution:
         while q:
             size = len(q)
             for i in range(size):
-                cur = q.popleft()
-                cur.next = q[0] if i < size - 1 else None
+                last = q.popleft()
+                last.next = q[0] if i < size - 1 else None
 
-                if cur.left:
-                    q.append(cur.left)
-                if cur.right:
-                    q.append(cur.right)
+                if last.left:
+                    q.append(last.left)
+                if last.right:
+                    q.append(last.right)
         return root

@@ -4,6 +4,13 @@ class Solution:
         for _, v in edges:
             can_win[v] = 0
         
-        if sum(can_win) > 1:
-            return -1
-        return can_win.index(1)
+        ans = None
+        c = 0
+        for i in range(n):
+            if can_win[i] == 1:
+                if c == 0:
+                    ans = i
+                    c = 1
+                else:
+                    return -1
+        return ans

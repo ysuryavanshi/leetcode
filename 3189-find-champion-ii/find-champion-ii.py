@@ -4,13 +4,6 @@ class Solution:
         for _, v in edges:
             in_degree[v] += 1
         
-        ans = None
-        count = 0
-        for key, value in in_degree.items():
-            if value == 0:
-                if count == 0:
-                    ans = key
-                    count = 1
-                else:
-                    return -1
-        return ans
+        w = [key for key, value in in_degree.items() if value == 0]
+
+        return w[0] if len(w) == 1 else -1

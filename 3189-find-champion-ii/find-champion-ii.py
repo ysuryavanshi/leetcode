@@ -10,7 +10,7 @@ class Solution:
             if can_win[i] == 1:
                 if c == 0:
                     ans = i
-                    c = 1
+                    c += 1
                 else:
                     return -1
         return ans

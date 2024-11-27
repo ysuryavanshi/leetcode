@@ -7,24 +7,21 @@
 class BSTIterator:
 
     def __init__(self, root: Optional[TreeNode]):
-        self.inorder = []
-        self.pointer = -1
-        self.size = 0
-        self.calculate_inorder(root)
-    
-    def calculate_inorder(self, node):
-        if not node: return
-        self.calculate_inorder(node.left)
-        self.inorder.append(node.val)
-        self.size += 1
-        self.calculate_inorder(node.right)        
+        self.iter = self._inorder(root)
+        self.nxt = next(self.iter, None)
+
+    def _inorder(self, node):
+        if node:
+            yield from self._inorder(node.left)
+            yield node.val
+            yield from self._inorder(node.right)        
 
     def next(self) -> int:
-        self.pointer += 1
-        return self.inorder[self.pointer]
+        res, self.nxt = self.nxt, next(self.iter, None)
+        return res        
 
     def hasNext(self) -> bool:
-        return self.pointer < self.size - 1
+        return self.nxt != None
 
 
 # Your BSTIterator object will be instantiated and called as such:

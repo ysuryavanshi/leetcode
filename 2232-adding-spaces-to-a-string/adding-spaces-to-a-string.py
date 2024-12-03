@@ -11,8 +11,7 @@ class Solution:
             res.append(s[i])
             i += 1
         
-        while i < m:
-            res.append(s[i])
-            i += 1
+        if i < m:
+            res.append(s[i:])
 
         return ''.join(res)

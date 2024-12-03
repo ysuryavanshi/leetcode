@@ -1,28 +1,31 @@
 class Solution:
     def validArrangement(self, pairs: List[List[int]]) -> List[List[int]]:
-        # graph represents adjacency list, inOutDeg tracks in/out degree difference
-        graph = defaultdict(list)
-        inOutDeg = defaultdict(int)
-
-        # Build graph and count in/out degrees
-        for start, end in pairs:
-            graph[start].append(end)
-            inOutDeg[start] += 1  # out-degree
-            inOutDeg[end] -= 1    # in-degree
-
-        # Find starting node 
-        startNode = pairs[0][0] 
-        for node in inOutDeg:
-            if inOutDeg[node] == 1:
-                startNode = node
+        indegree_map =   defaultdict(int)
+        outdegree_map = defaultdict(int)
+        adj_list = defaultdict(list)
+        
+        for u, v in pairs:
+            adj_list[u].append(v)
+            outdegree_map[u] += 1
+            indegree_map[v] += 1
+        
+        start_node = None
+        for key in outdegree_map.keys():
+            if outdegree_map[key] - indegree_map[key] == 1:
+                start_node = key
                 break
+        
+        if start_node == None:
+            start_node = pairs[0][0]
 
         path = []
-        def dfs(curr):
-            while graph[curr]:
-                nextNode = graph[curr].pop()
-                dfs(nextNode)
-                path.append((curr, nextNode))
-
-        dfs(startNode)
-        return path[::-1]
+        stack = [start_node]
+        while stack:
+            val = stack[-1]
+            idx = outdegree_map[val]
+            if idx == 0:
+                path.append(stack.pop())
+            else:
+                outdegree_map[val] -= 1
+                stack.append(adj_list[val][idx - 1])
+        return [[path[i], path[i-1]] for i in range(len(path) - 1, 0, -1)]

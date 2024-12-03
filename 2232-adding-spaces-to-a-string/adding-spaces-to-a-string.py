@@ -1,10 +1,18 @@
 class Solution:
     def addSpaces(self, s: str, spaces: List[int]) -> str:
-        stack = []
-        j = 0
-        for i, c in enumerate(s):
-            if j < len(spaces) and i == spaces[j]:
-                stack.append(' ')
+        res = []
+        i = j = 0
+        m, n = len(s), len(spaces)
+
+        while j < n:
+            if i == spaces[j]:
+                res.append(' ')
                 j += 1
-            stack.append(c)
-        return ''.join(stack)
+            res.append(s[i])
+            i += 1
+        
+        while i < m:
+            res.append(s[i])
+            i += 1
+
+        return ''.join(res)

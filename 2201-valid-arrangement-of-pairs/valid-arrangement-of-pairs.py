@@ -18,8 +18,8 @@ class Solution:
         if start_node == None:
             start_node = pairs[0][0]
 
-        path = []
         stack = [start_node]
+        path = []
         while stack:
             val = stack[-1]
             idx = outdegree_map[val]
@@ -28,4 +28,5 @@ class Solution:
             else:
                 outdegree_map[val] -= 1
                 stack.append(adj_list[val][idx - 1])
+
         return [[path[i], path[i-1]] for i in range(len(path) - 1, 0, -1)]

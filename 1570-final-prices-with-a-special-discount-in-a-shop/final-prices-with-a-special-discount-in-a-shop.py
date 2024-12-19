@@ -1,9 +1,9 @@
 class Solution:
     def finalPrices(self, prices: List[int]) -> List[int]:
-        for i, p in enumerate(prices):
+        for i in range(len(prices)):
             for j in prices[i + 1:]:
-                if j <= p:
-                    prices[i] = p - j
+                if j <= prices[i]:
+                    prices[i] = prices[i] - j
                     break
 
         return prices

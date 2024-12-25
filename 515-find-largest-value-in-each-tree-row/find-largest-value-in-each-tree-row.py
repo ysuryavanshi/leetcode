@@ -10,14 +10,15 @@ class Solution:
 
         res = []
         def dfs(node, l):
-            if len(res) > l:
-                res[l] = max(res[l], node.val)
-            else:
+            if node is None: return None
+
+            if len(res) == l:
                 res.append(node.val)
+            else:
+                res[l] = max(res[l], node.val)
             
-            if node.left:
-                dfs(node.left, l + 1)
-            if node.right:
-                dfs(node.right, l + 1)
+            dfs(node.left, l + 1)
+            dfs(node.right, l + 1)
+
         dfs(root, 0)
         return res

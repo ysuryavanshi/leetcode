@@ -12,12 +12,14 @@ class Solution:
         res = []
 
         while q:
-            res.append(max(q, key=lambda x: x.val))
+            maxx = -float('inf')
             for _ in range(len(q)):
                 node = q.popleft()
+                maxx = maxx if node.val < maxx else node.val
                 if node.left:
                     q.append(node.left)
                 if node.right:
                     q.append(node.right)
+            res.append(maxx)
 
-        return [i.val for i in res]
+        return res

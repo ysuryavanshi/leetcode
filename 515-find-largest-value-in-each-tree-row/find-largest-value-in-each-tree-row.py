@@ -12,14 +12,12 @@ class Solution:
         res = []
 
         while q:
-            maxx = -float('inf')
+            res.append(max([x.val for x in q]))
             for _ in range(len(q)):
                 node = q.popleft()
-                maxx = maxx if node.val < maxx else node.val
                 if node.left:
                     q.append(node.left)
                 if node.right:
                     q.append(node.right)
-            res.append(maxx)
 
         return res

@@ -1,7 +1,7 @@
 class Solution:
     def vowelStrings(self, words: List[str], queries: List[List[int]]) -> List[int]:
         p_count = [0]
-        vowels = ('a', 'e', 'i', 'o', 'u')
+        vowels = (['a', 'e', 'i', 'o', 'u'])
 
         cur = 0
         for word in words:

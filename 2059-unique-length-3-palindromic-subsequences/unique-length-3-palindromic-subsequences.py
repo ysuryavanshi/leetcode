@@ -8,6 +8,6 @@ class Solution:
             right[m] -= 1
             for c in left:
                 if right[c] > 0:
-                    res.add('%s%s'%(c, m))
+                    res.add((c, m))
             left.add(m)
         return len(res)

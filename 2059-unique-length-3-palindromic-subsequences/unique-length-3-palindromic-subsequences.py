@@ -1,19 +1,13 @@
-
 class Solution:
     def countPalindromicSubsequence(self, s: str) -> int:
-        R = [0] * 26
-        for u in s:
-            R[ord(u) - ord('a')] += 1
+        res = set()
+        left = set()
+        right = Counter(s)
         
-        L = [0] * 26
-        S = set()
-        
-        for i in range(len(s)):
-            t = ord(s[i]) - ord('a')
-            R[t] -= 1
-            for j in range(26):
-                if L[j] > 0 and R[j] > 0:
-                    S.add(26 * t + j)
-            L[t] += 1
-        
-        return len(S)
+        for m in s:
+            right[m] -= 1
+            for c in left:
+                if right[c] > 0:
+                    res.add('%s%s'%(c, m))
+            left.add(m)
+        return len(res)

@@ -3,7 +3,7 @@ class Solution:
         if len(s) < k: return False
 
         count = Counter(s)
-        if sum([value % 2 != 0 for _, value in count.items()]) > k:
+        if sum([count[c] % 2 != 0 for c in count]) > k:
             return False
 
         return True

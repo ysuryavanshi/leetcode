@@ -20,12 +20,8 @@ class Solution:
                 else:
                     return False
         
-        if len(l_list) > len(un_list):
-            return False
-
-        for i in reversed(range(len(l_list))):
-            if l_list[i] < un_list[-1]:
-                _ = l_list.pop(i)
-                _ = un_list.pop()
+        while l_list and un_list and l_list[-1] < un_list[-1]:
+            l_list.pop()
+            un_list.pop()
 
         return False if l_list else True

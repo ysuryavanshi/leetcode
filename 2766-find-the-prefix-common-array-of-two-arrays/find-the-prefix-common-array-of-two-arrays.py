@@ -1,26 +1,18 @@
 class Solution:
     def findThePrefixCommonArray(self, A: List[int], B: List[int]) -> List[int]:
-        temp = []
-        a_set = set()
-        
-        res = []
         count = 0
+        res = []
+        x = defaultdict(int)
 
-        for a, b in zip(A, B):
-            a_set.add(a)
-
-            i = 0
-            while i < len(temp):
-                if temp[i] in a_set:
-                    count += 1
-                    _ = temp.pop(i)
-                else:
-                    i += 1
-
-            if b in a_set:
-                count += 1
+        for i in range(len(A)):
+            if A[i] not in x:
+                x[A[i]] = 1
             else:
-                temp.append(b)
+                count += 1
+            
+            if B[i] not in x:
+                x[B[i]] = 1
+            else:
+                count += 1
             res.append(count)
-        
         return res

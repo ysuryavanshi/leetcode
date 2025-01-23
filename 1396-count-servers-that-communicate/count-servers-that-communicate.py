@@ -1,22 +1,19 @@
 class Solution:
     def countServers(self, grid: List[List[int]]) -> int:
-        servers = set()
-        for i in range(len(grid)):
-            connected = []
-            for j in range(len(grid[0])):
+        ROWS, COLS = len(grid), len(grid[0])
+
+        computers = []
+        rows_count, cols_count = [0] * ROWS, [0] * COLS
+
+        for i in range(ROWS):
+            for j in range(COLS):
                 if grid[i][j]:
-                    connected.append((i,j))
-
-            if len(connected) > 1:
-                servers.update(connected)
-
-        for j in range(len(grid[0])):
-            connected = []
-            for i in range(len(grid)):
-                if grid[i][j]:
-                    connected.append((i,j))
-
-            if len(connected) > 1:
-                servers.update(connected)
-
-        return len(servers)
+                    computers.append((i, j))
+                    rows_count[i] += 1
+                    cols_count[j] += 1
+        
+        res = 0
+        for i, j in computers:
+            if rows_count[i] > 1 or cols_count[j] > 1:
+                res += 1
+        return res

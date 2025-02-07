@@ -23,4 +23,5 @@ class Solution:
                     q.append(nei)
                 
                 new_node.neighbors.append(all_nodes[nei.val])
+
         return all_nodes[root.val]

@@ -8,7 +8,8 @@ class Solution:
             while temp:
                 summ += temp % 10
                 temp //= 10
-            mapp[summ].append(num)
+            if len(mapp[summ]) < 2:
+                mapp[summ].append(num)
         
         res = 0
         for _, val in mapp.items():

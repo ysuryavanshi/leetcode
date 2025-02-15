@@ -2,7 +2,6 @@ class Solution:
     def punishmentNumber(self, n: int) -> int:
         res = 0
 
-        @cache
         def partition(i, cur, target, string) -> bool:
             if i == len(string) and cur == target:
                 return True

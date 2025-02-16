@@ -1,25 +1,26 @@
 class Solution:
     def constructDistancedSequence(self, n: int) -> List[int]:
-        res = [0] * (2 * n - 1)
+        size = 2 * n - 1
+        res = [0] * size
         used = set()
 
         def backtrack(i):
-            if i == len(res):
+            if i == size:
                 return True
             
-            for num in range(n, 0, -1):
+            for num in reversed(range(1, n + 1)):
                 if num in used:
                     continue
-                if num > 1 and (i + num >= len(res) or res[i + num]):
+                if num > 1 and (i+num >= size or res[i+num]):
                     continue
                 
                 used.add(num)
                 res[i] = num
-                if num > 1:
-                    res[i + num] = num
+                if num != 1:
+                    res[i+num] = num
                 
                 j = i + 1
-                while j < len(res) and res[j]:
+                while j < size and res[j]:
                     j += 1
                 
                 if backtrack(j):
@@ -27,9 +28,9 @@ class Solution:
                 
                 used.remove(num)
                 res[i] = 0
-                if num > 1:
-                    res[i + num] = 0
-
+                if num != 1:
+                    res[i+num] = 0
+            
             return False
         
         backtrack(0)

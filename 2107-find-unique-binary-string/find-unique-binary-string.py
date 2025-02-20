@@ -1,6 +1,24 @@
 class Solution:
     def findDifferentBinaryString(self, nums: List[str]) -> str:
-        res = []
-        for i in range(len(nums)):
-            res.append('0' if nums[i][i] == '1' else '1')
-        return ''.join(res)
+        numSet = set(nums)
+        string = []
+
+        def backtrack():
+            if len(string) == len(nums):
+                return ''.join(string) not in numSet
+            
+            string.append('0')
+            if backtrack():
+                return True
+            _ = string.pop()
+
+            string.append('1')
+            if backtrack():
+                return True
+            _ = string.pop()
+            
+            return False
+        
+        backtrack()
+        return ''.join(string)
+            

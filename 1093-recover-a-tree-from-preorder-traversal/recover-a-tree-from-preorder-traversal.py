@@ -6,18 +6,19 @@
 #         self.right = right
 class Solution:
     def recoverFromPreorder(self, traversal: str) -> Optional[TreeNode]:
+        n = len(traversal)
         stack = []
         i = 0
 
-        while i < len(traversal):
+        while i < n:
             depth = 0
 
-            while i < len(traversal) and traversal[i] == '-':
+            while i < n and traversal[i] == '-':
                 i += 1
                 depth += 1
             
             num_start = i
-            while i < len(traversal) and traversal[i] != '-':
+            while i < n and traversal[i] != '-':
                 i += 1
             
             node = TreeNode(int(traversal[num_start:i]))

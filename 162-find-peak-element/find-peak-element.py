@@ -1,9 +1,13 @@
 class Solution:
     def findPeakElement(self, nums: List[int]) -> int:
-        max_num = -float('inf')
-        idx = None
-        for i, n in enumerate(nums):
-            if n > max_num:
-                max_num = n
-                idx = i
-        return idx
+        left = 0
+        right = len(nums) - 1
+
+        while left < right:
+            mid = (left + right) // 2
+            if nums[mid] > nums[mid + 1]:
+                right = mid
+            else:
+                left = mid + 1
+        
+        return left

@@ -1,36 +1,25 @@
 class Solution:
     def countOfSubstrings(self, word: str, k: int) -> int:
-        frequencies = [{}, {}]
-        for v in "aeiou":
-            frequencies[0][v] = 1
         
-        response, currentK, vowels, extraLeft, left = 0, 0, 0, 0, 0
+        def atleast_k(k):
+            vowels = defaultdict(int)
+            non_vowel = res = l = 0
 
-        for right, rightChar in enumerate(word):
-            if rightChar in frequencies[0]:
-                frequencies[1][rightChar] = frequencies[1].get(rightChar, 0) + 1
-                if frequencies[1][rightChar] == 1:
-                    vowels += 1
-            else:
-                currentK += 1
-
-            while currentK > k:
-                leftChar = word[left]
-                if leftChar in frequencies[0]:
-                    frequencies[1][leftChar] -= 1
-                    if frequencies[1][leftChar] == 0:
-                        vowels -= 1
+            for r in range(len(word)):
+                if word[r] in 'aeiou':
+                    vowels[word[r]] += 1
                 else:
-                    currentK -= 1
-                left += 1
-                extraLeft = 0
+                    non_vowel += 1
+                
+                while len(vowels) == 5 and non_vowel >= k:
+                    res += (len(word) - r)
+                    if word[l] in 'aeiou':
+                        vowels[word[l]] -= 1
+                    else:
+                        non_vowel -= 1
+                    if vowels[word[l]] == 0:
+                        vowels.pop(word[l])
+                    l += 1
+            return res
 
-            while vowels == 5 and currentK == k and left < right and word[left] in frequencies[0] and frequencies[1][word[left]] > 1:
-                extraLeft += 1
-                frequencies[1][word[left]] -= 1
-                left += 1
-
-            if currentK == k and vowels == 5:
-                response += (1 + extraLeft)
-
-        return response
+        return atleast_k(k) - atleast_k(k + 1)

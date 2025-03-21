@@ -1,31 +1,45 @@
+class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.size = [1] * n
+    
+    def find(self, x):
+        if x != self.parent[x]:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+    def union(self, x, y):
+        x = self.find(x)
+        y = self.find(y)
+        if x != y:
+            if self.size[x] < self.size[y]:
+                self.parent[x] = y
+                self.size[y] += self.size[x]
+            else:
+                self.parent[y] = x
+                self.size[x] += self.size[y]
+
+
 class Solution:
     def minimumCost(self, n: int, edges: List[List[int]], query: List[List[int]]) -> List[int]:
-        parent = list(range(n))
+        uf = UnionFind(n)
+
+        for u, v, w in edges:
+            uf.union(u, v)
         
-        min_path_cost = [-1] * n
-        
-        def find_root(node: int) -> int:
-            if parent[node] != node:
-                parent[node] = find_root(parent[node])
-            return parent[node]
-        
-        for source, target, weight in edges:
-            source_root = find_root(source)
-            target_root = find_root(target)
-            
-            min_path_cost[target_root] &= weight
-            
-            if source_root != target_root:
-                min_path_cost[target_root] &= min_path_cost[source_root]
-                parent[source_root] = target_root
-        
-        result = []
-        for start, end in query:
-            if start == end:
-                result.append(0)
-            elif find_root(start) != find_root(end):
-                result.append(-1)
+        component_cost = {}
+        for u, v, w in edges:
+            root = uf.find(u)
+            if root not in component_cost:
+                component_cost[root] = w
             else:
-                result.append(min_path_cost[find_root(start)])
-                
-        return result
+                component_cost[root] &= w
+        
+        res = []
+        for src, dst in query:
+            root1, root2 = uf.find(src), uf.find(dst)
+            if root1 != root2:
+                res.append(-1)
+            else:
+                res.append(component_cost[root1])
+        return res

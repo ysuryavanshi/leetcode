@@ -22,6 +22,6 @@ class Solution:
                     path_count[nei] = path_count[node]
                     heappush(min_heap, (cost + nei_cost, nei))
                 elif cost + nei_cost == min_cost[nei]:
-                    path_count[nei] = (path_count[nei] + path_count[node])
+                    path_count[nei] = (path_count[nei] + path_count[node]) % MOD
         
-        return path_count[n - 1] % MOD
+        return path_count[n - 1] 

@@ -12,9 +12,6 @@ class Solution:
                 gene = list(q.popleft())
                 for i, temp in enumerate(gene):
                     for c in 'ACGT':
-                        if gene[i] == c:
-                            continue
-                        
                         gene[i] = c
                         gene_str = ''.join(gene)
                         if gene_str == endGene:

@@ -13,5 +13,5 @@ class Solution:
                 cur_chars.remove(c)
                 if not cur_chars:
                     res.append(i - total + 1)
-                    total += (i - total + 1)
+                    total += res[-1]
         return res

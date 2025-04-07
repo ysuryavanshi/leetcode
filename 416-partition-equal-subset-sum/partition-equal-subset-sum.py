@@ -5,11 +5,14 @@ class Solution:
             return False
         
         target = total // 2
-        dp = [False] * (target + 1)
-        dp[0] = True
+        dp = set([0])
 
         for num in nums:
-            for i in range(target, num - 1, -1):
-                dp[i] = dp[i] or dp [i - num]
+            next_dp = dp.copy()
+            for val in dp:
+                if (s:= val + num) == target:
+                    return True
+                next_dp.add(s)
+            dp = next_dp
 
-        return dp[target]
+        return False

@@ -3,18 +3,25 @@ class Solution:
         nums.sort()
         cache = {}
 
-        def dfs(i, prev):
+        def dfs(i):
             if i == len(nums):
                 return []
-            if (i, prev) in cache:
-                return cache[(i, prev)]
+            if i in cache:
+                return cache[i]
             
-            res = dfs(i + 1, prev)
-            if nums[i] % prev == 0:
-                temp = [nums[i]] + dfs(i + 1, nums[i])
-                res = temp if len(temp) > len(res) else res
-            
-            cache[(i, prev)] = res
+            res = [nums[i]]
+            for j in range(i + 1, len(nums)):
+                if nums[j] % nums[i] == 0:
+                    temp = [nums[i]] + dfs(j)
+                    if len(temp) > len(res):
+                        res = temp
+
+            cache[i] = res            
             return res        
 
-        return dfs(0, 1)
+        res = []
+        for i in range(len(nums)):
+            temp = dfs(i)
+            if len(temp) > len(res):
+                res = temp
+        return res

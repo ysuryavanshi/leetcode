@@ -1,23 +1,26 @@
 class Solution:
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        if len(nums1) > len(nums2):
+            nums1, nums2 = nums2, nums1
+        
         m, n = len(nums1), len(nums2)
-        i = j = m1 = m2 = 0
-
-        for _ in range(0, ((m + n) // 2) + 1):
-            m2 = m1
-            if i < m and j < n:
-                if nums1[i] > nums2[j]:
-                    m1 = nums2[j]
-                    j += 1
+        low, high = 0, m
+        
+        while low <= high:
+            partitionX = (low + high) // 2
+            partitionY = (m + n + 1) // 2 - partitionX
+            
+            rightX = float('-inf') if partitionX == 0 else nums1[partitionX - 1]
+            rightY = float('-inf') if partitionY == 0 else nums2[partitionY - 1]
+            leftX = float('inf') if partitionX == m else nums1[partitionX]
+            leftY = float('inf') if partitionY == n else nums2[partitionY]
+            
+            if rightX <= leftY and rightY <= leftX:
+                if (m + n) % 2 == 0:
+                    return (max(rightX, rightY) + min(leftX, leftY)) / 2
                 else:
-                    m1 = nums1[i]
-                    i += 1
-            elif i < m:
-                m1 = nums1[i]
-                i += 1
+                    return max(rightX, rightY)
+            elif rightX > leftY:
+                high = partitionX - 1
             else:
-                m1 = nums2[j]
-                j += 1
-
-        if (n + m) % 2 == 1: return float(m1)
-        else: return (float(m1) + float(m2)) / 2.0
+                low = partitionX + 1

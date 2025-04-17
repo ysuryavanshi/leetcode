@@ -1,33 +1,36 @@
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        m = len(grid)
-        if m == 0: return -1
+        ROWS, COLS = len(grid), len(grid[0])
 
-        n = len(grid[0])
-        fresh_count = 0
-        rotten = deque()
+        q = deque()
+        visited = [[0] * COLS for _ in range(ROWS)]
+        res = fresh_oranges = 0
 
-        for r in range(m):
-            for c in range(n):
-                if grid[r][c] == 2:
-                    rotten.append((r, c))
-                elif grid[r][c] == 1:
-                    fresh_count += 1
+        for i in range(ROWS):
+            for j in range(COLS):
+                if grid[i][j] == 2:
+                    q.append((i, j))
+                    visited[i][j] = 1
+
+                if grid[i][j] == 1:
+                    fresh_oranges += 1
+
+        if not fresh_oranges:
+            return 0
+        if not q:
+            return -1
         
-        minutes = 0
-        while rotten and fresh_count > 0:
-            minutes += 1
+        while q:
+            res += 1
+            for _ in range(len(q)):
+                i, j = q.popleft()
+                neighbors = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
+                for dx, dy in neighbors:
+                    if dx < 0 or dy < 0 or dx == ROWS or dy == COLS or visited[dx][dy] or grid[dx][dy] != 1:
+                        continue
+                    
+                    fresh_oranges -= 1
+                    visited[dx][dy] = 1
+                    q.append((dx, dy))
 
-            for _ in range(len(rotten)):
-                x, y = rotten.popleft()
-
-                for dx, dy in [(1,0), (-1,0), (0,1), (0,-1)]:
-                    xx, yy = x + dx, y + dy
-                    if xx < 0 or xx == m or yy < 0 or yy == n: continue
-                    if grid[xx][yy] in [0, 2]: continue
-
-                    fresh_count -= 1
-                    grid[xx][yy] = 2
-                    rotten.append((xx, yy))
-        
-        return minutes if fresh_count == 0 else -1
+        return res - 1 if not fresh_oranges else -1

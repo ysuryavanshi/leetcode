@@ -1,23 +1,18 @@
 class Solution:
     def countAndSay(self, n: int) -> str:
-        sequence = '1'
+        res = '1'
 
         for _ in range(n - 1):
-            pairs = []
-            last_char = None
-            count = 0
+            temp = ''
+            i = 0
 
-            for c in sequence:
-                if not last_char:
-                    last_char = c
-                    count = 1
-                elif last_char != c:
-                    pairs.append([str(count), last_char])
-                    last_char = c
-                    count = 1
-                else:
+            while i < len(res):
+                count = 1
+                while i + 1 < len(res) and res[i] == res[i + 1]:
+                    i += 1
                     count += 1
-            pairs.append([str(count), last_char])    
-            sequence = ''.join([''.join(i) for i in pairs])
-
-        return sequence
+                temp += str(count) + res[i]
+                i += 1
+            res = temp
+        
+        return res

@@ -3,15 +3,6 @@ class Solution:
         mapp = defaultdict(list)
 
         for i in range(len(strs)):
-            mapp[''.join(sorted(strs[i]))].append(i)
+            mapp[''.join(sorted(strs[i]))].append(strs[i])
         
-        res = []
-        for key, value in mapp.items():
-            group = []
-
-            for i in value:
-                group.append(strs[i])
-
-            res.append(group)
-
-        return res
+        return list(mapp.values())

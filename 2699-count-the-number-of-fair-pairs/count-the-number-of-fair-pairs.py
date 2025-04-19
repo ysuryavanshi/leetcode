@@ -1,10 +1,11 @@
 class Solution:
     def countFairPairs(self, nums: List[int], lower: int, upper: int) -> int:
-        nums.sort()
+        nums.sort()  # ODM gear engaged — sort to enable binary search
+        res = 0
 
-        ans = 0
-        for i in range(len(nums) - 1):
-            l = bisect_left(nums, lower - nums[i], i + 1)
-            u = bisect_right(nums, upper - nums[i], i + 1)
-            ans += u - l
-        return ans
+        for i in range(len(nums)):
+            left = bisect_left(nums, lower - nums[i], i + 1)
+            right = bisect_right(nums, upper - nums[i], i + 1)
+            res += right - left
+
+        return res

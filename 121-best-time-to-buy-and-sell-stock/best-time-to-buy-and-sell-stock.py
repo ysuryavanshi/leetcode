@@ -3,8 +3,8 @@ class Solution:
         res = 0
         low = 10 ** 4
 
-        for p in prices:
-            res = max(res, p - low)
-            low = min(low, p)
-
+        for price in prices:
+            res = max(res, price - low)
+            low = min(low, price)
+        
         return res

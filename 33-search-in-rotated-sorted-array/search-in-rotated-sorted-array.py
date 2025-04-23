@@ -1,10 +1,5 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-
-
-# l     m     r
-# 4,5,6,0,1,2,3
-# target = 0
         left = 0
         right = len(nums) - 1
 

@@ -8,20 +8,18 @@ class Solution:
             "6": "mno",
             "7": "pqrs",
             "8": "tuv",
-            "9": "wxyz",
+            "9": "wxyz"
         }
         res = []
 
-        def backtrack(i, chars):
-            nonlocal res
+        def backtrack(i, string):
             if i == len(digits):
-                if chars:
-                    res.append(chars)
+                if string:
+                    res.append(string)
                 return
             
-            for letters in keyboard[digits[i]]:
-                for l in letters:
-                    backtrack(i+1, chars + l)
+            for c in keyboard[digits[i]]:
+                backtrack(i + 1, string + c)
 
         backtrack(0, '')
         return res

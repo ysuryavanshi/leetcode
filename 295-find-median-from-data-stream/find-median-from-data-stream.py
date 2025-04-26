@@ -1,21 +1,21 @@
 class MedianFinder:
 
     def __init__(self):
-        self.data = []
-        self.size = 0
+        self.low = []
+        self.high = []
         
-
     def addNum(self, num: int) -> None:
-        idx = bisect_left(self.data, num)
-        self.size += 1
-        self.data.insert(idx, num)
+        heappush(self.low, -num)
+        heappush(self.high, -heappop(self.low))
+
+        if len(self.low) < len(self.high):
+            heappush(self.low, -heappop(self.high))
 
     def findMedian(self) -> float:
-        mid = self.size // 2
-        if self.size % 2 == 0:
-            return (self.data[mid] + self.data[mid - 1]) / 2
-        return self.data[mid]
-        
+        if len(self.low) == len(self.high):
+            return (-self.low[0] + self.high[0]) / 2
+        else:
+            return -self.low[0]
 
 
 # Your MedianFinder object will be instantiated and called as such:

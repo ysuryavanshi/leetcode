@@ -1,11 +1,12 @@
 class Solution:
-    def findClosestElements(self, nums: List[int], k: int, x: int) -> List[int]:
-        left, right = 0, len(nums) - 1
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        left = 0
+        res = deque(arr[:k])
 
-        while right - left >= k:
-            if x - nums[left] > nums[right] - x:
+        for right in range(k, len(arr)):
+            if abs(arr[right] - x) < abs(arr[left] - x):
                 left += 1
-            else:
-                right -= 1
+                _ = res.popleft()
+                res.append(arr[right])
         
-        return nums[left:left + k]
+        return list(res)
